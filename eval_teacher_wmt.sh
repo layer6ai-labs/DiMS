@@ -1,0 +1,1 @@
+fairseq-generate $2 --gen-subset test --task translation_lev --path $1 --beam 1 --batch-size 32 --iter-decode-max-iter $3 --iter-decode-eos-penalty 0 --iter-decode-force-max-iter --iter-decode-with-beam $4 --remove-bpe --deduplicate --quiet $5 

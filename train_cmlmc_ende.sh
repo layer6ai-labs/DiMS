@@ -1,0 +1,47 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 fairseq-train PATH_TO_DATASET \
+    --arch cmlmc_transformer \
+    -s en \
+    -t de \
+    --optimizer adam \
+    --adam-betas '(0.9,0.98)' \
+    --criterion nat_loss \
+    --task translation_lev \
+    --label-smoothing 0.1 \
+    --noise random_mask \
+    --lr-scheduler inverse_sqrt \
+    --warmup-init-lr '1e-07' \
+    --weight-decay 0.01 \
+    --decoder-learned-pos \
+    --encoder-learned-pos \
+    --apply-bert-init \
+    --share-all-embeddings \
+    --max-tokens 8192 \
+    --max-tokens-valid 512 \
+    --max-epoch 250 \
+    --fixed-validation-seed 7 \
+    --ddp-backend=no_c10d \
+    --find-unused-parameters \
+    --fp16 \
+    --no-scale-embedding \
+    --concatPE\
+    --insertCausalSelfAttn \
+    --selfcorrection 0 \
+    --replacefactor 0.30 \
+    --encoder-mask \
+    --encoder-pred \
+    --lr 0.0007 \
+    --dropout 0.2 \
+    --warmup-updates 40000 \
+    --save-dir ./results/checkpoints/cmlmc_ende/ \
+    --tensorboard-logdir ./results/checkpoints/cmlmc_ende/ \
+    --log-file ./results/checkpoints/cmlmc_ende/log.txt \
+    --eval-bleu \
+    --eval-bleu-args '{"iter_decode_max_iter": 1}' \
+    --eval-bleu-remove-bpe \
+    --best-checkpoint-metric bleu \
+    --maximize-best-checkpoint-metric \
+    --eval-bleu-detok moses \
+    --patience 100 \
+    --validate-interval 1 \
+    --valid-per-epoch 0 \
+    --num-workers 40 
